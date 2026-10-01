@@ -15,20 +15,26 @@ def kolikonheitto():
             else:
                 print(f"\nHeitettiin klaava")
 def getItem():
-      l1.append("Potion")
-      print(f"added a potion to your inventory")
+    item = input("Minkä esineen haluat lisätä? ").lower()
+    l1.append(item)
+    print(f"Lisättiin {item} inventaarioon")
 def usePotion():
-      l1.remove("Potion")
+    if "potion" in l1:
+        l1.remove("Potion")
+        print("Käytit potionin")
+    else:
+        print("Sinulla ei ole potionia")
 def showInventory():
-      print(f"your inventory: {l1}")
-
+      print("\nTavaraluettelosi:\n")
+      for i in l1:
+            print(f"{i}")
 while True:
 
     if age < 12:
         print("Olet alaikäinen. Peli sammuu.")
         break
     else:
-        print(f"\nNimesi on {nimi} ja olet {age}-vuotias\nVALIKKO\n1. Heitä noppaa\n2. Heitä kolikkoa \n3. Hommaa potion\n4. Käytä potion\n5. Näytä inventory\n6. Lopeta peli")
+        print(f"\nNimesi on {nimi} ja olet {age}-vuotias\nVALIKKO\n1. Heitä noppaa\n2. Heitä kolikkoa \n3. Hommaa tavara\n4. Käytä potion\n5. Näytä inventory\n6. Lopeta peli")
         selection = int(input("\nValintasi: "))
         if selection == 1:
                 noppaPeli()
