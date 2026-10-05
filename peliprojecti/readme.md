@@ -11,3 +11,4 @@ Asiat jotka vielä puuttuvat ohjelmasta:
 - Kaupan tavaroita pitäisi ostaa muurahaisilla
 
 Akseli Rantanen
+test
