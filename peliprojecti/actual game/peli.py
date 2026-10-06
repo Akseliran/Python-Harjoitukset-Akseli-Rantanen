@@ -4,10 +4,16 @@ import display
 import saveRead
 import random
 
+
+
+# creating the games objects here, im not sure where if i should do this somewhere else so this will do
 home = classes.Room("Home")
 shop = classes.Room("Shop", [classes.Accelerant("growth accelerator", 5, 0.5), classes.Seed("pumpkin seed", 1, random.randint(1, 3))])
 farm = classes.Room("Farm", [classes.Accelerant("pumpkin", 5, 0.1)])
 rooms = {"home": home, "shop": shop, "farm": farm}
+
+
+
 def PlayerSetup():
     name = input("Player name: ")
     player = classes.Pelaaja(name, home, None)
@@ -43,12 +49,14 @@ def main():
                 print("You don't have that item.")
             elif isinstance(item, classes.Accelerant):
                 today_boost += item.boost
+                # DOESNT REMOVE THE ITEM WHEN USED DUE TO THE GAME OTHERWISE UNBEATABLE IN ITS CURRENT STATE
                 print(f"Used {item.name}: +{item.boost:.2f} growth tonight.")
             elif isinstance(item, classes.Seed):
+                # UNFINISHED
                 print("Seed test")
 
         elif command == "inventory":
-            for item in player.inventory:
+            for item in player.inventory: # print different info depending on the type of item
                 if isinstance(item, classes.Accelerant):
                     print(f"- {item.name} (+{item.boost:.2f})")
                 elif isinstance(item, classes.Seed):
@@ -84,7 +92,7 @@ def main():
                 print("There's nothing here.")
 
         else:
-            print("Commands: use <item name>, move <destination>, pickup <item name>, inventory, end, quit")
+            print("Commands: use <item name>, move <destination>, pickup <item name>, inventory, end, quit, look")
 
     print(f"\nFinal count: {display.format_ants(ants)} ants")
     if ants >= baseValues.target:
