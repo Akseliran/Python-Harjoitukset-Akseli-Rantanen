@@ -38,17 +38,20 @@ class Farm(Room): # NOT FULLY FUNCTIONAL YET
         self.crops = crops if crops is not None else []
 
     def plant(self, seed):
-        self.crops.append[seed, seed.growtime]
+        self.crops.append([seed, seed.growtime])
 
     def time(self):
-        finished = []
+        
+        finished = [] #names of the crops that finish growing
         for crop in self.crops[:]:
-            crop.days_left -= 1
-            if crop.days_left <= 0:
+
+            # subtract one day from the crops days_left
+            crop[1] -= 1
+            if crop[1] <= 0: # if the crop is done, remove it
                 self.crops.remove(crop)
-                if crop.seed.grown is not None:
-                    self.items.append(crop.seed.grown)
-                    finished.append(crop.seed.grown.name)
+                if crop[0].grown is not None: # if the crop has the grown item set, append that to the farms item list
+                    self.items.append(crop[0].grown)
+                    finished.append(crop[0].grown.name) # add the name of the crop to the list of names getting returned
         return finished
 
 

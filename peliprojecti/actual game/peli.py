@@ -10,7 +10,7 @@ import items
 # shop will have good items at the first day so the showcase of the game goes fast
 home = classes.Room("Home")
 shop = classes.Room("Shop", [items.grow_accel, items.melon, items.melon_seed])
-farm = classes.Room("Farm", [])
+farm = classes.Farm("Farm", [])
 
 rooms = {"home": home, "shop": shop, "farm": farm}
 
@@ -46,18 +46,29 @@ def main():
             day += 1
             shop.items = items.restock_shop()
             print("The shop has new items!")
+            ready = farm.time()
+            if ready:
+                print("Ready to harvest: " + ", ".join(ready))
         elif command.startswith("use "):
             item = player.findItem(command[4:])
             
             if item is None:
                 print("You don't have that item.")
             elif isinstance(item, classes.Accelerant):
-                today_boost += item.boost
-                # DOESNT REMOVE THE ITEM WHEN USED DUE TO THE GAME OTHERWISE UNBEATABLE IN ITS CURRENT STATE
+                if player.position is not home:
+                    print("You can only feed the ants at home")
+                else: 
+                    today_boost += item.boost
+                #player.inventory.remove(item)
+                # DOESNT REMOVE THE ITEM WHEN USED DUE TO THE GAME TAKING TOO LONG TO SHOWCASE
                 print(f"Used {item.name}: +{item.boost:.2f} growth tonight.")
             elif isinstance(item, classes.Seed):
-                # UNFINISHED
-                print("Seed test")
+                if player.position is not farm:
+                    print("You can only plants seeds in the farm")
+                else:
+                    farm.plant(item)
+                    player.inventory.remove(item)
+                    print(f"Planted {item.name}. It will be ready in {item.growtime} days.")
 
         elif command == "inventory":
             for item in player.inventory: # print different info depending on the type of item
