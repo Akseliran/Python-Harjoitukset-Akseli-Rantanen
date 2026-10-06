@@ -3,13 +3,15 @@ import classes
 import display
 import saveRead
 import random
-
+import items
 
 
 # creating the games objects here, im not sure where if i should do this somewhere else so this will do
+# shop will have good items at the first day so the showcase of the game goes fast
 home = classes.Room("Home")
-shop = classes.Room("Shop", [classes.Accelerant("growth accelerator", 5, 0.5), classes.Seed("pumpkin seed", 1, random.randint(1, 3))])
-farm = classes.Room("Farm", [classes.Accelerant("pumpkin", 5, 0.1)])
+shop = classes.Room("Shop", [items.grow_accel, items.melon, items.melon_seed])
+farm = classes.Room("Farm", [])
+
 rooms = {"home": home, "shop": shop, "farm": farm}
 
 
@@ -42,6 +44,8 @@ def main():
             ants = new_ants
             today_boost = 0.0
             day += 1
+            shop.items = items.restock_shop()
+            print("The shop has new items!")
         elif command.startswith("use "):
             item = player.findItem(command[4:])
             
